@@ -1,8 +1,7 @@
-# ByLocalsproject
 package models;
 import java.util.Scanner;
 
-public class PlaceSearch {
+public class PlaceSearchh {
     public static void main(String[] args) {
         String[] places = {"Maraya", "Old Town Village", "Ashar Valley fashion", "AlUla Museum", "Elephant Rock", "Hegra",
             "Jabal Ikmah", "AlUla Balloon Festival"};
@@ -10,8 +9,9 @@ public class PlaceSearch {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a place to search: ");
         String input = scanner.nextLine().trim();
+        
 
-        while (input.matches(".*\\d.*") || !input.matches("[a-zA-Z]+")) { // check if input contains a number or non-letter character
+        while (!input.matches("[a-zA-Z]+")) { // check if input contains a number or non-letter character
             System.out.println("Invalid input. Please enter a place using only letters.");
             System.out.print("Enter a place to search: ");
             input = scanner.nextLine().trim();
