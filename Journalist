@@ -1,0 +1,155 @@
+package javaapplication69;
+
+
+
+
+import java.time.Period;
+
+import java.time.LocalDate;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+class Journalist extends User {
+    
+      private static List<Journalist> journalistAccounts = new ArrayList<>();
+    public Journalist(String username, String password, String mobileNumber, String firstName, String lastName, LocalDate dateOfBirth) {
+        super(username, password, mobileNumber, firstName, lastName, dateOfBirth);
+    }
+
+    public static Journalist createAccount() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter username: ");
+        String username = scanner.nextLine();
+
+        while (!isValidUsername(username)) {
+            System.out.println("_____________________________________________________________ ");
+            System.out.println("Username must contain letters.\n Please enter a valid username:");
+            username = scanner.nextLine();
+        }
+
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine();
+
+        while (!isValidPassword(password)) {
+            System.out.println("_____________________________________________________________ ");
+            System.out.println("Invalid password.\n Please enter a password with at least 8 characters and containing at least one uppercase letter, one lowercase letter, and one digit: ");
+            password = scanner.nextLine();
+        }
+
+        System.out.println("Enter mobile number: ");
+        String mobileNumber = scanner.nextLine();
+
+        while (!isValidPhoneNumber(mobileNumber)) {
+            System.out.println("Invalid phone number.\n Please enter a valid number that doesn't contain letters: ");
+            mobileNumber = scanner.nextLine();
+            System.out.println("_____________________________________________________________ ");
+        }
+
+        System.out.println("Enter first name: ");
+        String firstName = scanner.nextLine();
+
+        while (!isValidName(firstName)) {
+            System.out.println("_____________________________________________________________ ");
+            System.out.println("Invalid first name.\n Please enter a valid name that doesn't contain numbers: ");
+            firstName = scanner.nextLine();
+        }
+
+        System.out.println("Enter last name: ");
+        String lastName = scanner.nextLine();
+
+        while (!isValidName(lastName)) {
+            System.out.println("_____________________________________________________________ ");
+            System.out.println("Invalid last name.\n Please enter a valid name that doesn't contain numbers: ");
+            lastName = scanner.nextLine();
+        }
+
+        System.out.println("Enter date of birth (YYYY-MM-DD): ");
+        LocalDate dateOfBirth = LocalDate.parse(scanner.nextLine());
+
+        
+        
+        Journalist journalist = new Journalist(username, password, mobileNumber, firstName, lastName, dateOfBirth);
+        journalistAccounts.add(journalist);
+        
+        System.out.println("Account created successfully!");
+
+        // Return to the home page
+        return null;
+    }
+
+   public static Journalist login() {
+    Scanner scanner = new Scanner(System.in);
+   while (true) {
+            System.out.println("Enter username: ");
+            String username = scanner.nextLine();
+
+            System.out.println("Enter password: ");
+            String password = scanner.nextLine();
+
+            // Check if username and password match
+            Journalist matchedJournalist = findJournalistByUsername(username);
+            if (matchedJournalist != null && matchedJournalist.getPassword().equals(password)) {
+                System.out.println("Logged in successfully!");
+
+                // Return to the home page
+                return null;
+        } else {
+            System.out.println("Invalid username or password.");
+            System.out.println("1. Try again");
+            System.out.println("2. Return to the main page");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline character
+
+            if (choice == 2) {
+                // Return to the main page
+                return null;
+            }
+        }
+    }
+}
+     private static Journalist findJournalistByUsername(String username) {
+        for (Journalist journalist : journalistAccounts) {
+            if (journalist.getUsername().equals(username)) {
+                return journalist;
+            }
+        }
+        return null;
+    }
+     
+
+private static boolean isValidCredentials(String username, String password) {
+    // Here, you can implement your logic to check the entered credentials against the stored credentials
+    // Replace the following condition with your actual implementation
+    return username.equals("desired_username") && password.equals("desired_password");
+}
+
+private static boolean isUsernameTaken(String username) {
+    // Here, you can implement your logic to check if the username already exists
+    // Replace the following condition with your actual implementation
+    return username.equals("existing_username");
+}
+
+
+    private static boolean isValidUsername(String username) {
+        // Check if the username contains letters
+        return username.matches(".*[a-zA-Z]+.*");
+    }
+
+    private static boolean isValidPassword(String password) {
+        // Check if the password has at least 8 characters and contains at least one uppercase letter, one lowercase letter, and one digit
+        return password.matches("(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}");
+    }
+
+    private static boolean isValidPhoneNumber(String phoneNumber) {
+        // Check if the phone number contains only digits
+        return phoneNumber.matches("\\d+");
+    }
+
+    private static boolean isValidName(String name) {
+        // Check if the name contains only letters
+        return name.matches("[a-zA-Z]+");
+    }
+}
