@@ -1,5 +1,4 @@
-package javaapplication69;
-
+package models;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -10,10 +9,10 @@ public class Menu extends User {
     }
 
     public static void main(String[] args) {
+          
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
-
-        while (!exit) {
+      
             System.out.println("Welcome to ByLocals");
             System.out.println("Please select your role:");
             System.out.println("1. Journalist");
@@ -40,15 +39,17 @@ public class Menu extends User {
                                 System.out.println("Journalist account created successfully!");
                                 break;
                             } 
+                              new JournalistMenu();
                             break;
 
                         case 2:
                             System.out.println("Logging in...");
                             journalist = Journalist.login();
                             if (journalist != null) {
-                                System.out.println("Logged in successfully!");
+                                System.out.println("Logged in successfully!"); 
                                 break;
                             } 
+                             new JournalistMenu();
                             break;
 
                         case 0:
@@ -61,6 +62,7 @@ public class Menu extends User {
                             break;
                     }
                     break;
+                      
 
                 case 2:
                     System.out.println("You have selected the Visitor role.");
@@ -76,18 +78,21 @@ public class Menu extends User {
                             System.out.println("Creating a new Visitor account...");
                             Visitor visitor = Visitor.createAccount();
                             if (visitor != null) {
-                                System.out.println("Visitor account created successfully!");
+                                System.out.println("Visitor account created successfully!");   
                                 break;
                             } 
+                            new VisitorMenu(); 
                             break;
 
                         case 2:
                             System.out.println("Logging in...");
                             visitor = Visitor.login();
                             if (visitor != null) {
-                                System.out.println("Logged in successfully!");
+                                System.out.println("Logged in successfully!");  
                                 break;
                             }
+                            
+                           new VisitorMenu(); 
                             break;
 
                         case 0:
@@ -110,6 +115,7 @@ public class Menu extends User {
                     System.out.println("Invalid choice.");
                     break;
             }
-        }
+        
+     
     }
 }
