@@ -1,0 +1,121 @@
+package models;
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class Menu extends User {
+
+    public Menu(String username, String password, String mobileNumber, String firstName, String lastName, LocalDate dateOfBirth) {
+        super(username, password, mobileNumber, firstName, lastName, dateOfBirth);
+    }
+
+    public static void main(String[] args) {
+          
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
+      
+            System.out.println("Welcome to ByLocals");
+            System.out.println("Please select your role:");
+            System.out.println("1. Journalist");
+            System.out.println("2. Visitor");
+            System.out.println("0. Exit");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("You have selected the Journalist role.");
+                    System.out.println("Would you like to create a new account or log in?");
+                    System.out.println("1. Create a new account");
+                    System.out.println("2. Log in");
+                    System.out.println("0. Exit");
+
+                    choice = scanner.nextInt();
+
+                    switch (choice) {
+                        case 1:
+                            System.out.println("Creating a new Journalist account...");
+                            Journalist journalist = Journalist.createAccount();
+                            if (journalist != null) {
+                                System.out.println("Journalist account created successfully!");
+                                break;
+                            } 
+                              new JournalistMenu();
+                            break;
+
+                        case 2:
+                            System.out.println("Logging in...");
+                            journalist = Journalist.login();
+                            if (journalist != null) {
+                                System.out.println("Logged in successfully!"); 
+                                break;
+                            } 
+                             new JournalistMenu();
+                            break;
+
+                        case 0:
+                            System.out.println("Exiting...");
+                            exit = true;
+                            break;
+
+                        default:
+                            System.out.println("Invalid choice.");
+                            break;
+                    }
+                    break;
+                      
+
+                case 2:
+                    System.out.println("You have selected the Visitor role.");
+                    System.out.println("Would you like to create a new account or log in?");
+                    System.out.println("1. Create a new account");
+                    System.out.println("2. Log in");
+                    System.out.println("0. Exit");
+
+                    choice = scanner.nextInt();
+
+                    switch (choice) {
+                        case 1:
+                            System.out.println("Creating a new Visitor account...");
+                            Visitor visitor = Visitor.createAccount();
+                            if (visitor != null) {
+                                System.out.println("Visitor account created successfully!");   
+                                break;
+                            } 
+                            new VisitorMenu(); 
+                            break;
+
+                        case 2:
+                            System.out.println("Logging in...");
+                            visitor = Visitor.login();
+                            if (visitor != null) {
+                                System.out.println("Logged in successfully!");  
+                                break;
+                            }
+                            
+                           new VisitorMenu(); 
+                            break;
+
+                        case 0:
+                            System.out.println("Exiting...");
+                            exit = true;
+                            break;
+
+                        default:
+                            System.out.println("Invalid choice.");
+                            break;
+                    }
+                    break;
+
+                case 0:
+                    System.out.println("Exiting...");
+                    exit = true;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice.");
+                    break;
+            }
+        
+     
+    }
+}
