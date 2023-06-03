@@ -1,31 +1,29 @@
 package javaapplication69;
 
 
-
-
-import java.time.Period;
-
 import java.time.LocalDate;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-class Journalist extends User {
+class Visitor extends User {
     
-      private static List<Journalist> journalistAccounts = new ArrayList<>();
-    public Journalist(String username, String password, String mobileNumber, String firstName, String lastName, LocalDate dateOfBirth) {
+    
+    private static final List<Visitor> visitorAccounts = new ArrayList<>();
+
+    public Visitor(String username, String password, String mobileNumber, String firstName, String lastName, LocalDate dateOfBirth) {
         super(username, password, mobileNumber, firstName, lastName, dateOfBirth);
     }
 
-    public static Journalist createAccount() {
+    public static Visitor createAccount() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter username: ");
         String username = scanner.nextLine();
 
-        while (!isValidUsername(username)) {
+        while (!isValidUsername(username) || isUsernameTaken(username)) {
             System.out.println("_____________________________________________________________ ");
-            System.out.println("Username must contain letters.\n Please enter a valid username:");
+            System.out.println("Invalid username or username already taken.\n Please enter a valid username:");
             username = scanner.nextLine();
         }
 
@@ -67,21 +65,21 @@ class Journalist extends User {
 
         System.out.println("Enter date of birth (YYYY-MM-DD): ");
         LocalDate dateOfBirth = LocalDate.parse(scanner.nextLine());
+        
+        Visitor visitor = new Visitor(username, password, mobileNumber, firstName, lastName, dateOfBirth);
 
-        
-        
-        Journalist journalist = new Journalist(username, password, mobileNumber, firstName, lastName, dateOfBirth);
-        journalistAccounts.add(journalist);
-        
+        visitorAccounts.add(visitor);
+
         System.out.println("Account created successfully!");
 
         // Return to the home page
         return null;
     }
+    
+    public static Visitor login() {
+        Scanner scanner = new Scanner(System.in);
 
-   public static Journalist login() {
-    Scanner scanner = new Scanner(System.in);
-   while (true) {
+        while (true) {
             System.out.println("Enter username: ");
             String username = scanner.nextLine();
 
@@ -89,67 +87,55 @@ class Journalist extends User {
             String password = scanner.nextLine();
 
             // Check if username and password match
-            Journalist matchedJournalist = findJournalistByUsername(username);
-            if (matchedJournalist != null && matchedJournalist.getPassword().equals(password)) {
+            Visitor matchedVisitor = findVisitorByUsername(username);
+            if (matchedVisitor != null && matchedVisitor.getPassword().equals(password)) {
                 System.out.println("Logged in successfully!");
 
                 // Return to the home page
                 return null;
-        } else {
-            System.out.println("Invalid username or password.");
-            System.out.println("1. Try again");
-            System.out.println("2. Return to the main page");
+            } else {
+                System.out.println("Invalid username or password.");
+                System.out.println("1. Try again");
+                System.out.println("2. Return to the main page");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume the newline character
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // consume the newline character
 
-            if (choice == 2) {
-                // Return to the main page
-                return null;
+                if (choice == 2) {
+                    // Return to the main page
+                    return null;
+                }
             }
         }
     }
-}
-     private static Journalist findJournalistByUsername(String username) {
-        for (Journalist journalist : journalistAccounts) {
-            if (journalist.getUsername().equals(username)) {
-                return journalist;
+    
+    private static Visitor findVisitorByUsername(String username) {
+        for (Visitor visitor : visitorAccounts) {
+            if (visitor.getUsername().equals(username)) {
+                return visitor;
             }
         }
         return null;
     }
-     
-
-private static boolean isValidCredentials(String username, String password) {
-    // Here, you can implement your logic to check the entered credentials against the stored credentials
-    // Replace the following condition with your actual implementation
-    return username.equals("desired_username") && password.equals("desired_password");
-}
-
-private static boolean isUsernameTaken(String username) {
-    // Here, you can implement your logic to check if the username already exists
-    // Replace the following condition with your actual implementation
-    return username.equals("existing_username");
-}
-
+    
+    private static boolean isUsernameTaken(String username) {
+        return findVisitorByUsername(username) != null;
+    }
 
     private static boolean isValidUsername(String username) {
-        // Check if the username contains letters
         return username.matches(".*[a-zA-Z]+.*");
     }
 
     private static boolean isValidPassword(String password) {
-        // Check if the password has at least 8 characters and contains at least one uppercase letter, one lowercase letter, and one digit
         return password.matches("(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}");
     }
 
     private static boolean isValidPhoneNumber(String phoneNumber) {
-        // Check if the phone number contains only digits
         return phoneNumber.matches("\\d+");
     }
 
     private static boolean isValidName(String name) {
-        // Check if the name contains only letters
         return name.matches("[a-zA-Z]+");
     }
 }
+
